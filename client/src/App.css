@@ -35,6 +35,8 @@
   display: flex;
   justify-content: center;
   text-align: left;
+  width: 83%;
+  margin-left: 6%;
 }
 
 

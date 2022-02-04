@@ -11,14 +11,15 @@ import Portal from "./components/Portal";
 import ApplicantPortal from "./components/ApplicantPortal";
 import Login from "./components/Login";
 import ApplicantSignUp from "./components/ApplicantSignUp";
-import Applications from "./components/Applications"
+import Applications from "./components/Applications";
+import ApplicantAdoptForm from "./components/ApplicantAdoptForm";
 import AdoptablePets from "./components/AdoptablePets";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({}); // obj is a truthy val
   const [pets, setPets] = useState([]);
   const [applications, setApplications] = useState([]);
-  const [portal, setPortal] = useState("Applicant");
+  const [portal, setPortal] = useState("Home");
 
   //auto-login for existing users
   useEffect(() => {
@@ -56,7 +57,7 @@ console.log("CURRENT USER IN APP", currentUser)
   if (portal === "Home") {
     return (
       <div className="App">
-        <HomeNavBar currentUser={currentUser} handleLogOut={handleLogOut}/>
+        <HomeNavBar />
 
         <Switch>
           <Route exact path="/">
@@ -66,7 +67,8 @@ console.log("CURRENT USER IN APP", currentUser)
             <AdoptablePets pets={pets}/>
           </Route>
           <Route exact path="/homeportal">
-            <Portal />
+            {/* the homeportal lets applicants register/log in  */}
+            <Portal setCurrentUser={setCurrentUser}/>
           </Route>
           <Route exact path="/homeportal/login">
             <Login setCurrentUser={setCurrentUser}/>
