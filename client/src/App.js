@@ -89,7 +89,7 @@ console.log("CURRENT USER IN APP", currentUser)
 
         <Switch>
           <Route exact path="/applicantportal">
-            <ApplicantPortal currentUser={currentUser} applications={applications}/>
+            <ApplicantPortal currentUser={currentUser} pets={pets} applications={applications}/>
           </Route>
           <Route exact path="/applicantportal/adoptablepets">
             <AdoptablePets pets={pets}/>

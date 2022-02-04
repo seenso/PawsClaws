@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 
-export default function HomeNavBar({  }) {
+export default function HomeNavBar() {
   return (
     <Navbar expand="lg" className="navbar">
       <Container >

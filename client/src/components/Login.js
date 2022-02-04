@@ -6,17 +6,18 @@ export default function Login({ setCurrentUser }) {
     
     // https://learning.flatironschool.com/courses/4552/pages/authenticating-users?module_item_id=346173
 
-  function handleSubmit(e) {
+  function handleLogIn(e) {
     e.preventDefault();
-    // fetch("/login", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ username }),
-    // })
-    //   .then((r) => r.json())
-    //   .then((user) => setCurrentUser(user));
+    fetch("/homeportal/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((r) => r.json())
+      .then((user) => setCurrentUser(user));
+    console.log("HANDLE LOGIN HERE")
   }
 
 
@@ -24,7 +25,7 @@ export default function Login({ setCurrentUser }) {
 
   return (
     <div id="login" className="rescueportal">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleLogIn}>
         <h3>Log in</h3>
 
         <div className="form-group">
