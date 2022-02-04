@@ -69,7 +69,6 @@ export default function ApplicantSignUp({ setCurrentUser, setPortal }) {
         yard_description: yardDesc,
         children,
         pet_allergy: petAllergy,
-        approved: false,
         lifestyle,
         user_id: currentUserID
       })
@@ -165,6 +164,13 @@ export default function ApplicantSignUp({ setCurrentUser, setPortal }) {
               <Form.Label>What's your lifestyle?</Form.Label>
               <Form.Control as="textarea" rows={1} onChange={(e)=> setLifestyle(e.target.value)}/>
             </Form.Group>
+
+            <Form.Group as={Col} controlId="formGridEmail">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="string" placeholder="Choose password" onChange={(e)=> setPassword(e.target.value)}/>
+            </Form.Group>
+
+            <br/>
 
             <Button variant="primary" type="submit">
               Submit
