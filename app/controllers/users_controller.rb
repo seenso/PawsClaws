@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
-    # wrap_parameters format: []
-    # skip_before_action :authorize, only: [:create]
-
+    
+    # GET /users
     def index
         render json: User.all
     end
@@ -9,8 +8,12 @@ class UsersController < ApplicationController
     # GET /me
     # handles the auto-login and allows user to stay logged in when page refreshes
     def show
-        current_user = User.find(session[:user_id])
-        render json: current_user
+        user = User.find_by(id: session[:user_id])
+        if user
+            render json: user
+        else
+            render json: "No one is logged in", status: :unauthorized
+        end
     end
 
     #POST /signup
@@ -20,18 +23,22 @@ class UsersController < ApplicationController
         render json: user, status: :created
     end
 
-    # DELETE /logout
-    def destroy
-        user = find_user
-        user.destroy!
-        head :no_content
-    end
-
+    # GET /users/:id
     def update
-        user = find_user
+        user = User.find(params[:id])
         user.update!(user_params)
         render json: user, status: :ok
     end
+
+    # DELETE /logout
+    def destroy 
+        user = User.find(params[:id])
+        user.destroy 
+        head :no_content 
+    rescue ActiveRecord::RecordNotFound => error 
+       render json: {error: error.message}, status: :not_found
+    end
+
 
     private
 
@@ -41,10 +48,6 @@ class UsersController < ApplicationController
         # coming from front end so using password and not password_digest.
         params.permit(:firstName, :lastName, :email, :password, :role, :phone)
         # params.permit(:username, :email, :password, :password_confirmation, :type, :phone)
-    end
-
-    def find_user
-        User.find(params[:id])
     end
 
 end

@@ -1,31 +1,38 @@
 import React, { useState } from "react";
 
-export default function Login({ setCurrentUser }) {
+export default function Login({ setCurrentUser, setPortal }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     
     // https://learning.flatironschool.com/courses/4552/pages/authenticating-users?module_item_id=346173
 
-  function handleLogIn(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    fetch("/homeportal/login", {
+    fetch("/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
     })
-      .then((r) => r.json())
-      .then((user) => setCurrentUser(user));
-    console.log("HANDLE LOGIN HERE")
+    .then((r) => {
+      if (r.ok) {r.json().then(user => {
+        setCurrentUser(user)
+        setPortal(user.role)
+        })
+      } else {
+        r.json().then((err)=> {
+          console.log("Something went wrong w Login", err)
+        })
+      }
+    })
+      console.log("USER LOGGED IN?")
+
   }
-
-
-
 
   return (
     <div id="login" className="rescueportal">
-      <form onSubmit={handleLogIn}>
+      <form onSubmit={handleSubmit}>
         <h3>Log in</h3>
 
         <div className="form-group">

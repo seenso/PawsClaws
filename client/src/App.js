@@ -1,7 +1,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import Home from "./components/Home";
 import Footer from "./components/Footer";
@@ -11,12 +11,11 @@ import Portal from "./components/Portal";
 import ApplicantPortal from "./components/ApplicantPortal";
 import Login from "./components/Login";
 import ApplicantSignUp from "./components/ApplicantSignUp";
-import Applications from "./components/Applications";
-import ApplicantAdoptForm from "./components/ApplicantAdoptForm";
+import Applications from "./components/Applications"
 import AdoptablePets from "./components/AdoptablePets";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({}); // obj is a truthy val
+  const [currentUser, setCurrentUser] = useState(null);
   const [pets, setPets] = useState([]);
   const [applications, setApplications] = useState([]);
   const [portal, setPortal] = useState("Home");
@@ -26,11 +25,13 @@ function App() {
     fetch("/me") // "/auth" in Ix's lecture - https://learning.flatironschool.com/courses/4552/pages/video-authorization-client?module_item_id=346181
     .then(res => {
       if(res.ok) {
-        res.json().then(user => setCurrentUser(user))
+        res.json().then((user) => {
+          setCurrentUser(user)
+          setPortal(user.role)
+        })
       }
     })
-  }, [portal])
-
+  }, [])
   // set pets
   useEffect(() => {
     fetch("/pets")
@@ -43,21 +44,30 @@ function App() {
     .then(r=>r.json())
     .then(apps => setApplications(apps))
   }, [])
-
+  //logout user
   function handleLogOut() {
-    //set portal to "Home" & delete session.
+    //reset portal and current User
     setPortal("Home");
+    console.log("Set portal to  Home")
     setCurrentUser({});
     console.log("Logged Out!")
+    //delete session w "/logout"
+    fetch('/logout', {method: "DELETE"})
+    .then(res => {
+        if (res.ok) {
+          setCurrentUser(null)
+        }
+      })
   }
 
 
 console.log("CURRENT USER IN APP", currentUser)
+console.log("PORTAL IN APP", portal)
 
   if (portal === "Home") {
     return (
       <div className="App">
-        <HomeNavBar />
+        <HomeNavBar currentUser={currentUser} handleLogOut={handleLogOut}/>
 
         <Switch>
           <Route exact path="/">
@@ -67,11 +77,10 @@ console.log("CURRENT USER IN APP", currentUser)
             <AdoptablePets pets={pets}/>
           </Route>
           <Route exact path="/homeportal">
-            {/* the homeportal lets applicants register/log in  */}
-            <Portal setCurrentUser={setCurrentUser}/>
+            <Portal />
           </Route>
           <Route exact path="/homeportal/login">
-            <Login setCurrentUser={setCurrentUser}/>
+            <Login setCurrentUser={setCurrentUser} setPortal={setPortal}/>
           </Route>
           <Route exact path="/homeportal/signup">
             <ApplicantSignUp setCurrentUser={setCurrentUser} setPortal={setPortal}/>
@@ -89,11 +98,13 @@ console.log("CURRENT USER IN APP", currentUser)
 
         <Switch>
           <Route exact path="/applicantportal">
-            <ApplicantPortal currentUser={currentUser} pets={pets} applications={applications}/>
+            <ApplicantPortal currentUser={currentUser} applications={applications} pets={pets}/>
           </Route>
           <Route exact path="/applicantportal/adoptablepets">
             <AdoptablePets pets={pets}/>
           </Route>
+          {/* if any route doesn't match, redirect user to this route */}
+          {/* <Redirect to="/applicantportal" /> */}
         </Switch> 
     
         <Footer />

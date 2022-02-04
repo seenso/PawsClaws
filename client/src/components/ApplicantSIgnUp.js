@@ -21,27 +21,22 @@ export default function ApplicantSignUp({ setCurrentUser, setPortal }) {
   const [lifestyle, setLifestyle] = useState();
   let currentUserID;
 
-  function handleSignUp(e) {
+function handleSignUp(e) {
     e.preventDefault();
 
-    // CREATE USER LOGIN
+    // CREATE USER LOGIN 
     fetch("/signup", {
       method: "POST", 
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        password,
-        role: "Applicant",
-        phone
+        firstName, lastName,
+        email, password,
+        phone,
+        role: "Applicant"
       })
     })
     .then((r) => {
-      if (r.ok) {
-        r.json().then((user) => {
-          console.log("USER", user)
-          // set currentUser
+      if (r.ok) {r.json().then(user => {
           currentUserID = user.id
           setCurrentUser(user)
           setPortal("Applicant")
@@ -53,16 +48,13 @@ export default function ApplicantSignUp({ setCurrentUser, setPortal }) {
       }
     })
 
-    // CREATE APPLIACANT PROFILE
+    // CREATE APPLICANT PROFILE
     fetch("/applicants", {
       method: "POST", 
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
-        first_name: firstName,
-        last_name: lastName,
-        dob,
-        email,
-        phone,
+        firstName, lastName,
+        dob, email, phone,
         rent_own: rentOwn,
         home_type: homeType,
         length_address: lengthAddress,
@@ -76,13 +68,11 @@ export default function ApplicantSignUp({ setCurrentUser, setPortal }) {
 
   }
 
-  // console.log("USER", rentOwn, homeType, yardDesc, children, petAllergy, lifestyle);
-
   return (
       <div id="applicant_signup" className="rescueportal">
         <br/>
         <Modal.Body>
-          <Form onSubmit={handleSignUp}>
+          <Form onSubmit={(e)=> handleSignUp(e)}>
             <h3>Register to Adopt!</h3>
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridEmail">
@@ -135,7 +125,7 @@ export default function ApplicantSignUp({ setCurrentUser, setPortal }) {
 
               <Form.Group as={Col} controlId="formGridState">
                 <Form.Label>Any Pet allergies?</Form.Label>
-                <Form.Select onChange={(e)=> setYardDesc(e.target.value)}>
+                <Form.Select onChange={(e)=> setPetAllergy(e.target.value)}>
                   <option>Choose</option>
                   <option>Yes</option>
                   <option>No</option>
