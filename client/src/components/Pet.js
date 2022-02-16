@@ -17,7 +17,7 @@ export default function Pet({ pet, currentUser }) {
     statusColor = "success"
   } else if (pet.status === "Intake Pending") {
     statusColor = "warning"
-  } else if (pet.status == "Adopted!") {
+  } else if (pet.status === "Adopted!") {
     statusColor = "secondary"
   }
 
@@ -48,7 +48,7 @@ export default function Pet({ pet, currentUser }) {
     <div className="pet">
 
       <Card style={{ width: '15rem' }} className="petCard">
-        <Card.Img variant="top" src={pet.image} className="petImg"/>
+        <Card.Img variant="top" src={pet.image} className="petImg" onClick={handleShow}/>
         <Card.Body>
           <Card.Title>{pet.name}, {pet.breed}, {pet.age}</Card.Title>
         </Card.Body>
@@ -60,9 +60,9 @@ export default function Pet({ pet, currentUser }) {
         </ListGroup>
 
         <>
-          <Button variant="primary" onClick={handleShow}>
+          {/* <Button variant="primary" onClick={handleShow}>
             More details
-          </Button>
+          </Button> */}
 
           <Modal show={show} onHide={handleClose}>
             <Modal.Header>
@@ -80,7 +80,7 @@ export default function Pet({ pet, currentUser }) {
             <Modal.Footer>
               { currentUser ? 
                 <>
-                  <Button variant="primary" onClick={handleAdoptRequest}>
+                  <Button class="btn btn-large" style={{ backgroundColor: "#9fc94c", color: "white", fontWeight: "bold", "fontSize":"14px"}} onClick={handleAdoptRequest}>
                     Apply to Adopt
                   </Button>
                   <Button variant="secondary" onClick={handleClose}>
@@ -89,7 +89,7 @@ export default function Pet({ pet, currentUser }) {
                 </>
                 : 
                 <>
-                  <Button variant="primary" href="/homeportal/signup">
+                  <Button class="btn btn-large" style={{ backgroundColor: "#9fc94c", color: "white", fontWeight: "bold", "fontSize":"14px"}} href="/homeportal/signup">
                     Register/Log In to Adopt
                   </Button>
                   <Button variant="secondary" onClick={handleClose}>
