@@ -11,27 +11,9 @@ export default function FosterPets({ currentUser, petFosters, setPets }) {
   const [petToUpdate, setPetToUpdate] = useState({id: "", name: "", status: "", image: "", species: "", breed: "", age: "", height: "", weight: "", fixed: "", energy_level: "", coat_type: "", coat_color: "", good_w_kids: "", good_w_cats: "", behavioral_issues: "", description: "", rabies_vaccine: "",FVRCP_vaccine: "", distemper_parvo_vaccine: "", dewormed: "", pet_foster: [], foster: []});
 
   let filteredFosterPets = petFosters.filter(petFoster => currentUser.email === petFoster.foster.email);
-  // console.log("filteredFosterPets", filteredFosterPets)
-
 
   function editPet(e) {
     let petObj = {}
-    // e.target[0].value //Name
-      // e.target[1].value //Species
-      // e.target[2].value //Breed
-      // e.target[3].value //Age
-      // e.target[4].value //Height
-      // e.target[5].value //Weigiht
-      // e.target[6].value //Energy
-      // e.target[7].value //Coat type
-      // e.target[8].value //Coat Color
-      // e.target[9].value //Good w kids BOOLEAN
-      // e.target[10].value //Good w cats BOOLEAN
-      // e.target[11].value //Behavioral Issues BOOLEAN
-      // e.target[12].value //Dewormed BOOLEAN
-      // e.target[13].value //Rabies vaccine
-      // e.target[14].value //FVRCP vaccine
-      // e.target[15].value //Description
 
     if (e.target[0].value === "") {
       petObj["name"] = petToUpdate.name;
@@ -360,7 +342,11 @@ export default function FosterPets({ currentUser, petFosters, setPets }) {
 
               <br />
 
-            <Button variant="primary" type="submit">
+            <Button 
+              type="submit"
+              class="btn btn-large" 
+              style={{ backgroundColor: "#f4805c", color: "white", fontWeight: "bold", "fontSize":"14px"}}  
+            >
               Submit
             </Button>
           </Form>
@@ -379,40 +365,39 @@ export default function FosterPets({ currentUser, petFosters, setPets }) {
 
   return (
     <div id="foster_pets" className="petTable">
-      <h3>My Fosters</h3>
+      <h3 className="pageName">My Fosters</h3>
       
-      <Table striped bordered hover responsive>
-        <thead>
-          <tr>
-            <th>Edit</th>
-            {/* <th>Pet #</th> */}
-            <th>Status</th>
-            <th>Name</th>
-            <th>Picture</th>
-            {/* <th>Foster</th> */}
-            {/* <th>Species</th> */}
-            <th>Breed</th>
-            <th>Age</th>
-            <th>Height</th>
-            <th>Weight</th>
-            <th>Fixed</th>
-            <th>Energy Level</th>
-            <th>Coat Type</th>
-            <th>Good w Kids?</th>
-            <th>Good w Cats?</th>
-            <th>Behavioral Issues?</th>
-            <th>Rabies Vaccine</th>
-            <th>FVRCP Vaccine (cat only)</th>
-            <th>Distemper/Parvo Vaccine</th>
-            <th>Dewormed?</th>
-            {/* <th>Description</th> */}
+      <table className="dataTable">
+        {/* <thead> */}
+          <tr className="dataTable">
+            <th className="dataTable">Edit</th>
+            <th className="dataTable">Status</th>
+            <th className="dataTable">Name</th>
+            <th className="dataTable">Picture</th>
+            <th className="dataTable">Breed</th>
+            <th className="dataTable">Age</th>
+            <th className="dataTable">Height</th>
+            <th className="dataTable">Weight</th>
+            {/* <th className="dataTable">Fixed</th> */}
+            {/* <th className="dataTable">Energy Level</th>
+            <th className="dataTable">Coat Type</th> */}
+            {/* <th className="dataTable">Good w Kids?</th>
+            <th className="dataTable">Good w Cats?</th>
+            <th className="dataTable">Behavioral Issues?</th>
+            <th className="dataTable">Rabies Vaccine</th>
+            <th className="dataTable">FVRCP Vaccine (cat only)</th>
+            <th className="dataTable">Distemper/Parvo Vaccine</th>
+            <th className="dataTable">Dewormed?</th> */}
           </tr>
-        </thead>
-        <tbody>
+        {/* </thead> */}
+        {/* <tbody> */}
           {filteredFosterPets.map(petObj => (
-            <tr key={petObj.pet.id}>
-              <td>
-                <Button onClick={() => openEditPetModal(petObj.pet)}>
+            <tr key={petObj.pet.id} className="dataTable">
+              <td className="dataTable">
+                <Button 
+                  class="btn btn-large" 
+                  style={{ backgroundColor: "#9fc94c", color: "white", fontWeight: "bold", "fontSize":"14px"}}
+                  onClick={() => openEditPetModal(petObj.pet)}>
                   Edit
                 </Button>
 
@@ -421,33 +406,29 @@ export default function FosterPets({ currentUser, petFosters, setPets }) {
                   onHide={() => setShowEditPet(false)}
                 />              
               </td>
-              {/* <td>{petObj.pet.id}</td> */}
-              <td>{petObj.pet.status}</td>
-              <td>{petObj.pet.name}</td>
-              <td>
+              <td className="dataTable">{petObj.pet.status}</td>
+              <td className="dataTable">{petObj.pet.name}</td>
+              <td className="dataTable">
                 <img alt={petObj.pet.id} src={petObj.pet.image} height="50px"/>
               </td>
-              {/* <td>{petObj.foster.first_name} {petObj.foster.last_name}</td> */}
-              {/* <td>{petObj.pet.species}</td> */}
-              <td>{petObj.pet.breed}</td>
-              <td>{petObj.pet.age}</td>
-              <td>{petObj.pet.height}</td>
-              <td>{petObj.pet.weight}</td>
-              <td>{petObj.pet.fixed ? "Yes" : "No"}</td>
-              <td>{petObj.pet.energy_level}</td>
-              <td>{petObj.pet.coat_type}</td>
-              <td>{petObj.pet.good_w_kids ? "Yes" : "No"}</td>
-              <td>{petObj.pet.good_w_cats ? "Yes" : "No"}</td>
-              <td>{petObj.pet.behavioral_issues ? "Yes" : "No"}</td>
-              <td>{petObj.pet.rabies_vaccine}</td>
-              <td>{petObj.pet.species === "Cat" ? petObj.pet.FVRCP_vaccine : "---"}</td>
-              <td>{petObj.pet.distemper_parvo_vaccine}</td>
-              <td>{petObj.pet.dewormed ? "Yes" : "No"}</td>
-              {/* <td>{petObj.pet.description}</td> */}
+              <td className="dataTable">{petObj.pet.breed}</td>
+              <td className="dataTable">{petObj.pet.age}</td>
+              <td className="dataTable">{petObj.pet.height} inches</td>
+              <td className="dataTable">{petObj.pet.weight}lbs</td>
+              {/* <td className="dataTable">{petObj.pet.fixed ? "Yes" : "No"}</td>
+              {/* <td className="dataTable">{petObj.pet.energy_level}</td>
+              <td className="dataTable">{petObj.pet.coat_type}</td> */}
+              {/* <td className="dataTable">{petObj.pet.good_w_kids ? "Yes" : "No"}</td>
+              <td className="dataTable">{petObj.pet.good_w_cats ? "Yes" : "No"}</td>
+              <td className="dataTable">{petObj.pet.behavioral_issues ? "Yes" : "No"}</td>
+              <td className="dataTable">{petObj.pet.rabies_vaccine}</td>
+              <td className="dataTable">{petObj.pet.species === "Cat" ? petObj.pet.FVRCP_vaccine : "---"}</td>
+              <td className="dataTable">{petObj.pet.distemper_parvo_vaccine}</td>
+              <td className="dataTable">{petObj.pet.dewormed ? "Yes" : "No"}</td> */}
             </tr>
           ))}
-        </tbody>
-      </Table>
+        {/* </tbody> */}
+      </table>
       
     </div>
   );

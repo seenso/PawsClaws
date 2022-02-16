@@ -5,10 +5,21 @@
   height: 90px;
 }
 
-.navbar {
+.navbar, .pageName {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.dataTable, .dataRow {
+  border: 1px solid #424242;
+  padding: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x: auto;
+}
+tr:hover {
+  background-color: #9fc94c49;
 }
 
 #home {
@@ -49,13 +60,15 @@
   margin: 60px;
   background-color: white;
   border-radius: 25px;
-  /* justify-content: left; */
+}
+#loginErrors {
+  color: red;
 }
 
 #footer {
-  /* position: fixed;
+  position: fixed;
   left: 0;
   bottom: 0;
-  width: 100%; */
+  width: 100%; 
   text-align: center;
 }
