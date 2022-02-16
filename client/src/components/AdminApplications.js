@@ -86,22 +86,23 @@ export default function AdminApplications({ applications, setApplications }) {
 
   return (
     <div id="admin_applications" className="table">
-      <h3>Pet Applications</h3>
-      <Table striped bordered hover responsive>
-        <thead>
-          <tr>
-            <th>Edit</th>
-            <th>id</th>
-            <th>Status</th>
-            <th>Pet</th>
-            <th>Applicant</th>
-            <th>Applicant Approved?</th>
+      <h3 className="pageName">Pet Applications</h3>
+      {/* <div> */}
+      <table className="dataTable">
+        {/* <thead> */}
+          <tr className="dataTableHeader">
+            <th className="dataTableHeader">Edit</th>
+            <th className="dataTableHeader">id</th>
+            <th className="dataTableHeader">Status</th>
+            <th className="dataTableHeader">Pet</th>
+            <th className="dataTableHeader">Applicant</th>
+            <th className="dataTableHeader">Applicant Approved?</th>
           </tr>
-        </thead>
-        <tbody>
+        {/* </thead> */}
+        {/* <tbody> */}
           {applications.map(a => (
-            <tr key={a.id}>
-              <td>
+            <tr key={a.id} className="dataTable">
+              <td className="dataTable">
                 <Button onClick={() => openEditAppModal(a)}
                   class="btn btn-large"
                   style={{ backgroundColor: "#9fc94c", color: "white", fontWeight: "bold", "fontSize":"14px"}}
@@ -114,16 +115,16 @@ export default function AdminApplications({ applications, setApplications }) {
                   onHide={() => setShowEditApp(false)}
                 />
               </td>
-              <td>{a.id}</td>
-              <td>{a.status}</td>
-              <td>{a.pet.name}</td>
-              <td>{a.applicant.firstName} {a.applicant.lastName}</td>
-              <td>{a.applicant.approved ? "Yes" : "No"}</td>
+              <td className="dataTable">{a.id}</td>
+              <td className="dataTable">{a.status}</td>
+              <td className="dataTable">{a.pet.name}</td>
+              <td className="dataTable">{a.applicant.firstName} {a.applicant.lastName}</td>
+              <td className="dataTable">{a.applicant.approved ? "Yes" : "No"}</td>
             </tr>
           ))}
-        </tbody>
-      </Table>
-
+        {/* </tbody> */}
+      </table>
+      {/* </div> */}
     </div>
   )
 }
